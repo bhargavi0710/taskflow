@@ -1,17 +1,63 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.username.label }}<br>
-        {{ form.username(class="form-control") }}
+<div class="auth-bg">
+    <!-- Floating blobs for background depth -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="auth-card">
+        <!-- Logo / Brand -->
+        <div class="auth-brand">
+            <div class="auth-logo">✅</div>
+            <h1 class="auth-title">TaskFlow</h1>
+            <p class="auth-subtitle">Welcome back! Sign in to your workspace.</p>
+        </div>
+
+        <form method="POST" class="auth-form" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="field-group">
+                <label class="field-label" for="username">Username</label>
+                <div class="field-input-wrap">
+                    <span class="field-icon">👤</span>
+                    {{ form.username(class="field-input", id="username", placeholder="Enter your username") }}
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label class="field-label" for="password">Password</label>
+                <div class="field-input-wrap">
+                    <span class="field-icon">🔒</span>
+                    {{ form.password(class="field-input", id="password", placeholder="Enter your password") }}
+                    <button type="button" class="toggle-pass" onclick="togglePassword('password', this)"
+                        title="Show/Hide Password">👁️</button>
+                </div>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <span>Sign In</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            Don't have an account?
+            <a href="{{ url_for('register') }}" class="auth-link">Create one free →</a>
+        </p>
     </div>
-    <div class="mb-3">
-        {{ form.password.label }}<br>
-        {{ form.password(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
-<p class="mt-2">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+</div>
+
+<script>
+    function togglePassword(fieldId, btn) {
+        const input = document.getElementById(fieldId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+        }
+    }
+</script>
 {% endblock %}

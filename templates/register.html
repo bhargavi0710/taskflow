@@ -1,25 +1,130 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>Register</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div class="mb-3">
-        {{ form.username.label }}<br>
-        {{ form.username(class="form-control") }}
+<div class="auth-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="auth-card auth-card--wide">
+        <div class="auth-brand">
+            <div class="auth-logo">✅</div>
+            <h1 class="auth-title">TaskFlow</h1>
+            <p class="auth-subtitle">Create your free account and start organizing.</p>
+        </div>
+
+        <form method="POST" class="auth-form" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label class="field-label" for="username">Username</label>
+                    <div class="field-input-wrap">
+                        <span class="field-icon">👤</span>
+                        {{ form.username(class="field-input", id="username", placeholder="Choose a username") }}
+                    </div>
+                    {% if form.username.errors %}
+                    <p class="field-error">{{ form.username.errors[0] }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="email">Email Address</label>
+                    <div class="field-input-wrap">
+                        <span class="field-icon">✉️</span>
+                        {{ form.email(class="field-input", id="email", placeholder="you@example.com") }}
+                    </div>
+                    {% if form.email.errors %}
+                    <p class="field-error">{{ form.email.errors[0] }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label class="field-label" for="password">Password</label>
+                    <div class="field-input-wrap">
+                        <span class="field-icon">🔒</span>
+                        {{ form.password(class="field-input", id="password", placeholder="Min. 6 characters") }}
+                        <button type="button" class="toggle-pass" onclick="togglePassword('password', this)"
+                            title="Show password">👁️</button>
+                    </div>
+                    {% if form.password.errors %}
+                    <p class="field-error">{{ form.password.errors[0] }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="field-group">
+                    <label class="field-label" for="confirm_password">Confirm Password</label>
+                    <div class="field-input-wrap">
+                        <span class="field-icon">🔑</span>
+                        {{ form.confirm_password(class="field-input", id="confirm_password", placeholder="Repeat your
+                        password") }}
+                        <button type="button" class="toggle-pass" onclick="togglePassword('confirm_password', this)"
+                            title="Show password">👁️</button>
+                    </div>
+                    {% if form.confirm_password.errors %}
+                    <p class="field-error">{{ form.confirm_password.errors[0] }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Password strength indicator -->
+            <div class="strength-wrap">
+                <div class="strength-bar" id="strength-bar"></div>
+                <span class="strength-label" id="strength-label"></span>
+            </div>
+
+            <button type="submit" class="auth-btn">
+                <span>Create Account</span>
+                <span class="btn-arrow">→</span>
+            </button>
+        </form>
+
+        <p class="auth-switch">
+            Already have an account?
+            <a href="{{ url_for('login') }}" class="auth-link">Sign in →</a>
+        </p>
     </div>
-    <div class="mb-3">
-        {{ form.email.label }}<br>
-        {{ form.email(class="form-control") }}
-    </div>
-    <div class="mb-3">
-        {{ form.password.label }}<br>
-        {{ form.password(class="form-control") }}
-    </div>
-    <div class="mb-3">
-        {{ form.confirm_password.label }}<br>
-        {{ form.confirm_password(class="form-control") }}
-    </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
-<p class="mt-2">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+</div>
+
+<script>
+    function togglePassword(fieldId, btn) {
+        const input = document.getElementById(fieldId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁️';
+        }
+    }
+
+    // Password strength meter
+    const pwdInput = document.getElementById('password');
+    const strengthBar = document.getElementById('strength-bar');
+    const strengthLabel = document.getElementById('strength-label');
+
+    pwdInput && pwdInput.addEventListener('input', () => {
+        const val = pwdInput.value;
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        const levels = [
+            { label: '', color: 'transparent', width: '0%' },
+            { label: 'Weak', color: '#e74c3c', width: '25%' },
+            { label: 'Fair', color: '#f39c12', width: '50%' },
+            { label: 'Good', color: '#2ecc71', width: '75%' },
+            { label: 'Strong', color: '#27ae60', width: '100%' },
+        ];
+        const lvl = levels[Math.min(score, 4)];
+        strengthBar.style.width = lvl.width;
+        strengthBar.style.background = lvl.color;
+        strengthLabel.textContent = lvl.label;
+        strengthLabel.style.color = lvl.color;
+    });
+</script>
 {% endblock %}

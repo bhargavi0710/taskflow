@@ -4,38 +4,66 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cloud To-Do App</title>
+    <meta name="description" content="TaskFlow – Manage your tasks smarter, faster, and better." />
+    <title>TaskFlow – Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="flash-wrapper">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">
+            <span>{{ message }}</span>
+            <button class="flash-close" onclick="this.parentElement.remove()">✕</button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
     <div class="container">
-        <!-- Theme Toggle -->
-        <div class="theme-toggle">
-            <label class="switch">
-                <input type="checkbox" id="theme-switch" />
-                <span class="slider round"></span>
-            </label>
-            <span class="theme-label">🌞 / 🌙</span>
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="topbar-brand">
+                <span class="topbar-logo">✅</span>
+                <span class="topbar-name">TaskFlow</span>
+            </div>
+            <div class="topbar-right">
+                <div class="theme-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="theme-switch" />
+                        <span class="slider"></span>
+                    </label>
+                    <span class="theme-label">🌞 / 🌙</span>
+                </div>
+                <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
+            </div>
         </div>
 
-        <h1>✅ Cloud To-Do App</h1>
-        <h2>Hello, {{ current_user.username }}!</h2>
+        <!-- Welcome -->
+        <h1 class="welcome-heading">👋 Welcome back, {{ current_user.username }}!</h1>
+        <p class="welcome-sub">Here's what's on your plate today.</p>
 
-        <!-- Search Bar -->
-        <form method="get">
-            <input type="text" name="q" placeholder="Search tasks..." value="{{ search_query }}">
-        </form>
-
-        <!-- Add Task Form -->
-        <form method="POST" action="/add">
-            <input type="text" name="content" placeholder="Add a new task" required />
-            <button type="submit">Add</button>
-        </form>
+        <!-- Search + Add Task -->
+        <div class="action-bar">
+            <form method="get" style="display:contents;">
+                <input type="text" name="q" placeholder="🔍 Search tasks..." value="{{ search_query }}" />
+            </form>
+            <form method="POST" action="/add" style="display:contents;">
+                <input type="text" name="content" placeholder="✏️ Add a new task..." required />
+                <button type="submit">+ Add</button>
+            </form>
+        </div>
 
         <!-- Progress Bar -->
         <div class="progress-container">
-            <h3>Progress</h3>
+            <p class="progress-title">Progress Overview</p>
 
             {% set completed = progress.Completed if progress and 'Completed' in progress else 0 %}
             {% set partial = progress['Partially Completed'] if progress and 'Partially Completed' in progress else 0 %}
@@ -47,16 +75,9 @@
             {% set pending_percent = (pending / total * 100) | round(0) %}
 
             <div class="progress-bar">
-                <div class="bar completed" style="width: {{ completed_percent | default(0) }}%;">
-                    {{ completed_percent }}%
-                </div>
-                <div class="bar partial" style="width: {{ partial_percent | default(0) }}%;">
-                    {{ partial_percent }}%
-                </div>
-                <div class="bar pending" style="width: {{ pending_percent | default(0) }}%;">
-                    {{ pending_percent }}%
-                </div>
-                
+                <div class="bar completed" style="width: {{ completed_percent }}%;"></div>
+                <div class="bar partial" style="width: {{ partial_percent }}%;"></div>
+                <div class="bar pending" style="width: {{ pending_percent }}%;"></div>
             </div>
 
             <div class="progress-labels">
@@ -66,42 +87,53 @@
             </div>
         </div>
 
-
         <!-- Task Table -->
         {% if tasks %}
         <table>
-            <tr>
-                <th>Task</th>
-                <th>Status</th>
-                <th>Change Status</th>
-                <th>Delete</th>
-            </tr>
-            {% for task in tasks %}
-            <tr>
-                <td>{{ task.content }}</td>
-                <td class="{{ task.status|lower }}">{{ task.status }}</td>
-                <td>
-                    <form method="POST" action="/update/{{ task.id }}">
-                        <select name="status">
-                            <option value="Pending" {% if task.status=='Pending' %}selected{% endif %}>❌ Pending
-                            </option>
-                            <option value="Partially Completed" {% if task.status=='Partially Completed' %}selected{%
-                                endif %}>⚠️ Partially Completed</option>
-                            <option value="Completed" {% if task.status=='Completed' %}selected{% endif %}>✅ Completed
-                            </option>
-                        </select>
-                        <button type="submit">Update</button>
-                    </form>
-                </td>
-                <td><a href="/delete/{{ task.id }}" class="delete-btn">🗑️</a></td>
-            </tr>
-            {% endfor %}
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Status</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    <td style="text-align:left;">{{ task.content }}</td>
+                    <td>
+                        {% if task.status == 'Completed' %}✅
+                        {% elif task.status == 'Partially Completed' %}⚠️
+                        {% else %}❌
+                        {% endif %}
+                        {{ task.status }}
+                    </td>
+                    <td>
+                        <form method="POST" action="/update/{{ task.id }}"
+                            style="display:flex; align-items:center; gap:6px; justify-content:center;">
+                            <select name="status">
+                                <option value="Pending" {% if task.status=='Pending' %}selected{% endif %}>❌ Pending
+                                </option>
+                                <option value="Partially Completed" {% if task.status=='Partially Completed'
+                                    %}selected{% endif %}>⚠️ Partially Completed</option>
+                                <option value="Completed" {% if task.status=='Completed' %}selected{% endif %}>✅
+                                    Completed</option>
+                            </select>
+                            <button type="submit" class="update-btn">Save</button>
+                        </form>
+                    </td>
+                    <td><a href="/delete/{{ task.id }}" class="delete-btn">🗑️</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
         {% else %}
-        <p>No tasks yet!</p>
+        <div class="no-tasks">
+            <div class="no-tasks-icon">📋</div>
+            <p>No tasks yet — add one above!</p>
+        </div>
         {% endif %}
-
-        <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 
     <!-- Theme Toggle Script -->
@@ -115,14 +147,17 @@
         }
 
         toggleSwitch.addEventListener('change', () => {
-            if (toggleSwitch.checked) {
-                body.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                body.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
+            body.classList.toggle('dark', toggleSwitch.checked);
+            localStorage.setItem('theme', toggleSwitch.checked ? 'dark' : 'light');
         });
+
+        // Auto-dismiss flash messages
+        setTimeout(() => {
+            document.querySelectorAll('.flash').forEach(el => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 400);
+            });
+        }, 4000);
     </script>
 </body>
 

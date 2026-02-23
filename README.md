@@ -1,44 +1,68 @@
-# ✅ Cloud To-Do App
+# ✅ TaskFlow – Smart Cloud To-Do App
 
-A minimal and elegant web-based To-Do application built with Flask and SQLite. Users can add, update, and delete tasks — perfect for learning web development and cloud deployment!
+A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. Users can register, log in, and manage tasks with real-time status tracking — all deployed and live on Render.
+
+🌐 **Live App:** [https://cloud-todo-app.onrender.com](https://cloud-todo-app.onrender.com)
 
 ---
 
 ## 🚀 Features
 
-- Add new tasks with ease
-- Mark tasks as ✅ Done or ❌ Pending
-- Delete tasks
-- Responsive UI with clean table formatting
-- Deployable to the cloud (e.g., Render, Railway)
+- 🔐 User authentication (register & login with hashed passwords)
+- ✅ Add, update (Pending / Partially Completed / Completed), and delete tasks
+- 📊 Visual progress bar with task breakdown
+- 🔍 Search/filter tasks
+- 🌙 Dark mode toggle (persisted via localStorage)
+- 🎨 Modern glassmorphism UI with animated backgrounds
+- ☁️ Cloud-backed with Firebase Firestore
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Backend:** Python (Flask)
-- **Database:** SQLite
-- **Frontend:** HTML, CSS (Vanilla)
-- **Deployment:** [Render](https://render.com):
-https://flask-todo-app-lo93.onrender.com
+| Layer      | Technology              |
+|------------|-------------------------|
+| Backend    | Python (Flask)          |
+| Database   | Firebase Firestore      |
+| Auth       | Flask-Login + Bcrypt    |
+| Frontend   | HTML, Vanilla CSS, JS   |
+| Deployment | [Render](https://render.com) |
+
 ---
 
 ## 🖥️ Running Locally
 
-1. Clone the repository:
+1. **Clone the repository:**
    ```bash
    git clone git@github.com:bhargavi0710/Flask_To-Do_App.git
    cd Flask_To-Do_App
-2. Create a virtual environment and activate it:
+   ```
+
+2. **Create and activate a virtual environment:**
    ```bash
-   python3 -m venv venv
-   source venv/bin/activate
-3. Install the dependencies:
+   python -m venv venv
+   venv\Scripts\activate   # Windows
+   ```
+
+3. **Install dependencies:**
    ```bash
    pip install -r requirements.txt
-4. Run the Flask app:
+   ```
+
+4. **Add your Firebase credentials:**
+   Place your `firebase_key.json` at `/etc/secrets/firebase_key.json` (or update the path in `app.py`).
+
+5. **Run the app:**
    ```bash
    python app.py
-5. Open your browser and visit:
-   ```bash
-   http://localhost:5000
+   ```
+
+6. Open your browser at `http://localhost:5000`
+
+---
+
+## ☁️ Deployment on Render
+
+This app is already deployed at [https://cloud-todo-app.onrender.com](https://cloud-todo-app.onrender.com).
+
+To trigger a redeployment: simply **push to the `main` branch** — Render auto-deploys on every push.
