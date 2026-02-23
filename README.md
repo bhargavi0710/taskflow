@@ -2,7 +2,7 @@
 
 A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. Users can register, log in, and manage tasks with real-time status tracking — all deployed and live on Render.
 
-🌐 **Live App:** [https://cloud-todo-app.onrender.com](https://cloud-todo-app.onrender.com)
+🌐 **Live App:** [https://flask-to-do-app-ac3a.onrender.com](https://flask-to-do-app-ac3a.onrender.com)
 
 ---
 
