@@ -2,7 +2,7 @@
 
 A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. Users can register, log in, and manage tasks with real-time status tracking — all deployed and live on Render.
 
-🌐 **Live App:** [https://flask-to-do-app-ac3a.onrender.com](https://flask-to-do-app-ac3a.onrender.com)
+🌐 **Live App:** [https://taskflow.onrender.com](https://taskflow.onrender.com)
 
 ---
 
@@ -34,8 +34,8 @@ A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. 
 
 1. **Clone the repository:**
    ```bash
-   git clone git@github.com:bhargavi0710/Flask_To-Do_App.git
-   cd Flask_To-Do_App
+   git clone git@github.com:bhargavi0710/taskflow.git
+   cd taskflow
    ```
 
 2. **Create and activate a virtual environment:**
@@ -63,6 +63,6 @@ A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. 
 
 ## ☁️ Deployment on Render
 
-This app is already deployed at [https://cloud-todo-app.onrender.com](https://cloud-todo-app.onrender.com).
+This app is already deployed at [https://taskflow.onrender.com](https://taskflow.onrender.com).
 
 To trigger a redeployment: simply **push to the `main` branch** — Render auto-deploys on every push.
