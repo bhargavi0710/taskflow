@@ -1,68 +1,206 @@
 # ✅ TaskFlow – Smart Cloud To-Do App
 
-A fast, elegant, cloud-powered To-Do application built with Flask and Firebase. Users can register, log in, and manage tasks with real-time status tracking — all deployed and live on Render.
+A modern cloud-native task management platform built with **Flask, Firebase Firestore, and Render**. TaskFlow enables users to securely manage tasks, track productivity, and monitor progress through a responsive web interface with real-time cloud persistence.
 
-🌐 **Live App:** [https://flask-to-do-app-ac3a.onrender.com](https://flask-to-do-app-ac3a.onrender.com)
-
----
-
-## 🚀 Features
-
-- 🔐 User authentication (register & login with hashed passwords)
-- ✅ Add, update (Pending / Partially Completed / Completed), and delete tasks
-- 📊 Visual progress bar with task breakdown
-- 🔍 Search/filter tasks
-- 🌙 Dark mode toggle (persisted via localStorage)
-- 🎨 Modern glassmorphism UI with animated backgrounds
-- ☁️ Cloud-backed with Firebase Firestore
+🌐 **Live Application:** https://flask-to-do-app-ac3a.onrender.com
 
 ---
 
-## 🛠️ Tech Stack
+## 🚀 Key Features
 
-| Layer      | Technology              |
-|------------|-------------------------|
-| Backend    | Python (Flask)          |
-| Database   | Firebase Firestore      |
-| Auth       | Flask-Login + Bcrypt    |
-| Frontend   | HTML, Vanilla CSS, JS   |
-| Deployment | [Render](https://render.com) |
+### 🔐 Secure Authentication
+- User registration and login system
+- Password hashing using BCrypt
+- Session management with Flask-Login
+- User-specific task isolation
+
+### 📋 Task Management
+- Create, update, and delete tasks
+- Track task status:
+  - Pending
+  - Partially Completed
+  - Completed
+- Real-time task updates
+
+### 📊 Productivity Dashboard
+- Dynamic progress tracking
+- Visual task completion statistics
+- Task status breakdown
+
+### 🔍 Smart Search & Filtering
+- Search tasks instantly
+- Filter by task status
+- Improved task organization
+
+### 🌙 Enhanced User Experience
+- Dark mode support
+- Theme preference persistence using localStorage
+- Modern glassmorphism-inspired UI
+- Responsive design across devices
+
+### ☁️ Cloud-Powered Architecture
+- Firebase Firestore for persistent storage
+- Hosted on Render
+- Automatic deployment pipeline
+
+---
+
+## 🏗️ System Architecture
+
+```text
+Browser
+   │
+   ▼
+Frontend (HTML/CSS/JavaScript)
+   │
+   ▼
+Flask Application Server
+   │
+   ├── Authentication Layer
+   │       └── Flask-Login + BCrypt
+   │
+   └── Task Management Logic
+           │
+           ▼
+Firebase Firestore
+```
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technology |
+|---------|---------|
+| Backend | Flask (Python) |
+| Database | Firebase Firestore |
+| Authentication | Flask-Login, BCrypt |
+| Frontend | HTML5, CSS3, JavaScript |
+| Deployment | Render |
+| Version Control | Git & GitHub |
+
+---
+
+## 🧠 Engineering Highlights
+
+### Cloud Database Integration
+Integrated Firebase Firestore for scalable cloud-based task storage and retrieval.
+
+### Secure Authentication
+Implemented BCrypt password hashing and Flask-Login session management for secure user authentication.
+
+### Responsive User Interface
+Built a modern glassmorphism-inspired interface with dark mode support and responsive layouts.
+
+### Automated Deployment
+Configured Render for continuous deployment directly from GitHub.
 
 ---
 
 ## 🖥️ Running Locally
 
-1. **Clone the repository:**
-   ```bash
-   git clone git@github.com:bhargavi0710/taskflow.git
-   cd taskflow
-   ```
+### 1. Clone the Repository
 
-2. **Create and activate a virtual environment:**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate   # Windows
-   ```
+```bash
+git clone https://github.com/bhargavi0710/taskflow.git
+cd taskflow
+```
 
-3. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Create and Activate a Virtual Environment
 
-4. **Add your Firebase credentials:**
-   Place your `firebase_key.json` at `/etc/secrets/firebase_key.json` (or update the path in `app.py`).
+```bash
+python -m venv venv
+```
 
-5. **Run the app:**
-   ```bash
-   python app.py
-   ```
+Windows:
 
-6. Open your browser at `http://localhost:5000`
+```bash
+venv\Scripts\activate
+```
+
+Linux/Mac:
+
+```bash
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Configure Firebase Credentials
+
+Place your Firebase service account key:
+
+```text
+firebase_key.json
+```
+
+at:
+
+```text
+/etc/secrets/firebase_key.json
+```
+
+or update the path in:
+
+```python
+app.py
+```
+
+### 5. Run the Application
+
+```bash
+python app.py
+```
+
+Open:
+
+```text
+http://localhost:5000
+```
 
 ---
 
-## ☁️ Deployment on Render
+## ☁️ Deployment
 
-This app is already deployed at [https://flask-to-do-app-ac3a.onrender.com](https://flask-to-do-app-ac3a.onrender.com).
+TaskFlow is deployed on Render:
 
-To trigger a redeployment: simply **push to the `main` branch** — Render auto-deploys on every push.
+https://flask-to-do-app-ac3a.onrender.com
+
+### Deployment Workflow
+
+- Push changes to GitHub
+- Render automatically detects updates
+- Application redeploys automatically
+
+---
+
+## 🔮 Future Enhancements
+
+- Task deadlines and reminders
+- Email notifications
+- Calendar integration
+- Recurring tasks
+- Team collaboration
+- Shared workspaces
+- Mobile application
+- AI-powered productivity assistant
+
+---
+
+## 👩‍💻 Author
+
+**Bhargavi Jagdale**
+
+B.E. Computer Engineering, MMCOE Pune
+
+- GitHub: https://github.com/bhargavi0710
+- LinkedIn: https://www.linkedin.com/in/bhargavi-jagdale-a29b69290
+
+---
+
+## 📄 License
+
+MIT License — free to use and modify.
